@@ -1,0 +1,18 @@
+[
+    {
+        "title": "titulo3",
+        "description": "description3",
+        "price": 3333,
+        "image": "image3",
+        "code": "0903d5e377fbffd9906c",
+        "stock": 3000
+    },
+    {
+        "title": "titulo1",
+        "description": "description1",
+        "price": 1111,
+        "image": "image1",
+        "code": "5cff579916a56b7601d8",
+        "stock": 3000
+    }
+]
