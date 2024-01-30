@@ -1,0 +1,38 @@
+[
+    {
+        "title": "titulo1",
+        "description": "description1",
+        "price": 111,
+        "image": "image1",
+        "code": "1",
+        "stock": 1000,
+        "id": "406ed8f8564c3b92f8aa"
+    },
+    {
+        "title": "titulo2",
+        "description": "description2",
+        "price": 222,
+        "image": "image2",
+        "code": "2",
+        "stock": 2000,
+        "id": "7e4e0af2ae53a085033d"
+    },
+    {
+        "title": "titulo3",
+        "description": "description3",
+        "price": 333,
+        "image": "image3",
+        "code": "3",
+        "stock": 3000,
+        "id": "2cca6d67634e4c7941a2"
+    },
+    {
+        "title": "titulo5",
+        "description": "description5",
+        "price": "5555",
+        "image": "image5",
+        "code": "55",
+        "stock": 5000,
+        "id": "810ccbf10f6ce2931ff7"
+    }
+]
