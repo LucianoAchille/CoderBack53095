@@ -38,4 +38,12 @@ cartRouter.get('/:cid', async(req,res)=>{
 
 })
 
+cartRouter.get('/:cid/product/:pid',async(req,res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+})
+
 export default cartRouter
