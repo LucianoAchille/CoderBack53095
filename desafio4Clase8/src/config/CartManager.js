@@ -4,7 +4,7 @@ import crypto from 'crypto'
 export class CartManager {
     constructor(path) {
         this.path = path
-        this.carts
+        this.carts=[]
     }
 
     async addCart(pid){

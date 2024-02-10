@@ -1,1 +1,24 @@
-[]
+[
+    {
+        "id": "1",
+        "productos":[
+            {
+                "id": "012a9f1eb2883e6bbabb",
+                "quantity": 100
+            },
+            {
+                "id": "e21360d1dc3f0ef8813f",
+                "quantity": 200
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "productos":[
+            {
+                "id": "012a9f1eb2883e6bbabb",
+                "quantity": 100
+            }
+        ]
+    }
+]
