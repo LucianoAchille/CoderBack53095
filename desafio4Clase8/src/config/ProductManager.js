@@ -15,13 +15,17 @@ export class ProductManager {
             let prod = products.find(prod => prod.code === newProduct.code)
             //console.log(prod)
             if (prod) {
-                return `Producto con codigo ${newProduct.code} ya existe`
+                console.log(`Producto con codigo ${newProduct.code} ya existe`)
+                return false
             }else{
-                
+                newProduct.thumbnail = []
+                newProduct.id = crypto.randomBytes(10).toString('hex')
+                newProduct.status = true
                 products.push(newProduct)
-                return `Producto con codigo ${newProduct.code} agregado exitosamente`
                 await fs.writeFile(this.path,JSON.stringify(products))
-            } 
+                console.log(`Producto con codigo ${newProduct.code} agregado exitosamente`)
+                return true
+                } 
             }
         else return "Faltan datos"
         //const id = this.products.findIndex(prod => prod.code === product.code) //findindex devuelve -1 si no encuentra
@@ -29,7 +33,7 @@ export class ProductManager {
     }
     
     async getProducts () {
-        console.log(this.path)
+        //console.log(this.path)
         let products = await this.readProducts()
         return products
     }
@@ -39,7 +43,7 @@ export class ProductManager {
         return JSON.parse(products)
     }
     controlOk(prod){
-        if(!prod.title || !prod.description || !prod.price || !prod.image || !prod.code || !prod.stock) 
+        if(!prod.title || !prod.description || !prod.price || !prod.code || !prod.stock) 
             return false
             else return true
         }
@@ -55,38 +59,32 @@ export class ProductManager {
                
     }
 
-    updateProduct = async(id,title,description,price,image,code,stock) => {
-        if(this.controlOk){
+    updateProduct = async(id,product) => {
+        if(this.controlOk(product)){
             let products= await this.readProducts()
-            let prod = products.find(prod => prod.id === id)
-            if (!prod) {
-                console.log(`Producto con codigo ${id} no existe`)
-                }
-            else{
-                let newProducts = products.filter(prod=> prod.id !== id)
-                let newProduct ={
-                    title,
-                    description,
-                    price,
-                    image,
-                    code,
-                    stock
-                }
-                newProduct.title= title
-                newProduct.description= description
-                newProduct.price=price
-                newProduct.image=image
-                newProduct.code = code
-                newProduct.stock=stock
-                newProduct.id = id
-                newProducts.push(newProduct)
-                console.log(newProducts)
-                await fs.writeFile(this.path,JSON.stringify(newProducts))
+            //let prodold = products.find(prod => prod.id === id)
+            //console.log(product)
+            //console.log(prodold)
+            let indice = products.findIndex(prod=>prod.id===id)
+            //console.log(indice)            
+            if(indice != -1){
+                products[indice].title=product.title
+                products[indice].description=product.description
+                products[indice].price=product.price
+                products[indice].code=product.code
+                products[indice].stock=product.stock
+                await fs.writeFile(this.path,JSON.stringify(products))
                 console.log(`Producto con codigo ${id} actualizado exitosamente`)
-            } 
+                return true
+            }
+            else{
+                console.log(`Producto con id ${id} no existe`)
+                return false
+            }
+                    
         }
         else{
-            console.log('Faltan datos')
+            return 'Faltan datos'
         }
     }
 
@@ -98,9 +96,13 @@ export class ProductManager {
             //console.log(newProducts)
             await fs.writeFile(this.path,JSON.stringify(newProducts))
             console.log(`Producto con id ${id} eliminado exitosamente`)
+            return true
             
         }
-        else console.log(`Producto con id ${id} no existe`)
+        else {
+            console.log(`Producto con id ${id} no existe`)
+            return false
+        }
 
     }
 }
