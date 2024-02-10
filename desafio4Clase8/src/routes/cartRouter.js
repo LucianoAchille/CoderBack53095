@@ -6,7 +6,7 @@ const cartRouter = new Router()
 
 cartRouter.get('/', async(req,res)=>{
     try {
-        const carts = await cartManager.getCart()
+        const carts = await cartManager.getCarts()
         res.status(200).send(carts)
     } catch (error) {
         res.status(500).send(`Error interno del servidor al consultar productos: ${error}`)
@@ -14,4 +14,28 @@ cartRouter.get('/', async(req,res)=>{
 
 })
 
-export default CartManager
+cartRouter.post('/', async(req,res)=>{
+    try {
+        //const cart = req.body
+        const mensaje = await cartManager.createCart()
+        res.status(200).send(`CArro agregado`)
+    } catch (error) {
+        res.status(500).send(`Error interno del servidor al consultar productos: ${error}`)
+    }
+
+})
+
+cartRouter.get('/:cid', async(req,res)=>{
+    try {
+        const id = req.params.cid
+        console.log(id)
+        const cart = await cartManager.getCartById(id)
+        if(cart) res.status(200).send(cart)
+        else res.status(404).send(`CArrito con id ${id} no existe`)
+    } catch (error) {
+        res.status(500).send(`Error interno del servidor al consultar productos: ${error}`)   
+    }
+
+})
+
+export default cartRouter
