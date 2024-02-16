@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import {CartManager} from '../config/CartManager.js'
 
-const cartManager = new CartManager('src/data/cart.json')
+const cartManager = new CartManager('./src/data/cart.json')
 const cartRouter = new Router()
 
 cartRouter.get('/', async(req,res)=>{
@@ -40,9 +40,13 @@ cartRouter.get('/:cid', async(req,res)=>{
 
 cartRouter.get('/:cid/product/:pid',async(req,res)=>{
     try {
-        
+        const idcart = req.params.cid
+        const idprod = req.params.pid
+        const cart = await cartManager.addProdToCart(idcart,idprod)
+        if(cart) res.status(200).send(cart)
+        else res.status(404).send(`Carrito con id ${idcart} no existe`)
     } catch (error) {
-        
+        res.status(500).send(`Error interno del servidor al consultar productos: ${error}`)  
     }
 })
 

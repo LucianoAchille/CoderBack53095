@@ -10,11 +10,6 @@ export class CartManager {
         this.carts=[]
     }
 
-    async addCart(pid){
-        
-
-    }
-    
     async createCart(){
         const newcart = {}
         newcart.id=crypto.randomBytes(10).toString('hex')
@@ -49,17 +44,23 @@ export class CartManager {
 
     async getCartById(cid) {
         const carts = await this.getCarts()
-        console.log(carts)
+        //console.log(carts)
         const cart = carts.find(el=>el.id === cid)
         if (cart) return cart
-        else return `Carro ${cid} no existe`
+        else return false
     }
 
-    async addProdToCart(cid,pid,quantity){
-        const cart = await getCartById(cid)
+    async addProdToCart(cid,pid){
+        const cart = await this.getCartById(cid)
         if (cart){
-            const prods= cart.find(el=>el.id === pid)
-            
+            console.log(cart)
+            const prod= cart.productos.find(el=>el.id === pid)
+            console.log(prod)
+            if(prod){
+                prod.quantity=prod.quantity+1
+                console.log(prod)
+            }
+            return cart
         }
         else{
             return `Carro  ${cid} no existe`
