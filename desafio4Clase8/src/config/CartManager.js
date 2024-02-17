@@ -27,21 +27,6 @@ export class CartManager {
         return cart
     }
 
-    // async addProductByCart(idProducto, quantityParam) {
-    //     const cart = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-
-    //     const indice = cart.findIndex(product => product.id == idProducto)
-
-    //     if (indice != -1) {
-    //         cart[indice].quantity += quantityParam //5 + 5 = 10, asigno 10 a quantity
-    //     } else {
-    //         const prod = { id: idProducto, quantity: quantityParam }
-    //         cart.push(prod)
-    //     }
-    //     await fs.writeFile(this.path, JSON.stringify(cart))
-    //     return `Producto ${idProducto} cargado correctamente en el carrito`
-    // }
-
     async getCartById(cid) {
         const carts = await this.getCarts()
         //console.log(carts)
@@ -51,19 +36,17 @@ export class CartManager {
     }
 
     async addProdToCart(cid,pid){
-        const cart = await this.getCartById(cid)
-        if (cart){
-            console.log(cart)
-            const prod= cart.productos.find(el=>el.id === pid)
-            console.log(prod)
-            if(prod){
-                prod.quantity=prod.quantity+1
-                console.log(prod)
-            }
+        const carts = await this.getCarts()
+        const cartIndex= carts.findIndex(cart=>cart.id === cid)
+        if(cartIndex!==-1) {
+            const cart = carts[cartIndex]
+            const prodIndex = cart.products.findIndex(prod=>prod.id===pid)
+            if(prodIndex!==-1)  cart.products[prodIndex].quantity+=1
+                    else cart.products.push({"id":pid, "quantity":1})
+            carts[cartIndex]=cart
+            await fs.writeFile(this.path,JSON.stringify(carts)) 
             return cart
-        }
-        else{
-            return `Carro  ${cid} no existe`
-        }
+          
+        }else  return false
     }
 }
