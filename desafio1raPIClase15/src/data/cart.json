@@ -1,1 +1,28 @@
-[{"id":"86ad220fdf0ca09a1240","productos":[{"id":"012a9f1eb2883e6bbabb","quantity":100},{"id":"e21360d1dc3f0ef8813f","quantity":200}]},{"id":"efff1d7669a51d899572","products":[{"id":"012a9f1eb2883e6bbabb","quantity":6},{"id":"012a9f1eb2883e6","quantity":3}]}]
+[
+    {
+        "id": "86ad220fdf0ca09a1240",
+        "productos": [
+            {
+                "id": "012a9f1eb2883e6bbabb",
+                "quantity": 100
+            },
+            {
+                "id": "e21360d1dc3f0ef8813f",
+                "quantity": 200
+            }
+        ]
+    },
+    {
+        "id": "efff1d7669a51d899572",
+        "products": [
+            {
+                "id": "012a9f1eb2883e6bbabb",
+                "quantity": 6
+            },
+            {
+                "id": "012a9f1eb2883e6",
+                "quantity": 3
+            }
+        ]
+    }
+]

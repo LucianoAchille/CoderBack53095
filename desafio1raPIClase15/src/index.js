@@ -4,6 +4,7 @@ import productRouter from './routes/productsRouter.js'
 import { __dirname } from './path.js'
 import mongoose from 'mongoose'
 import userRouter from './routes/userRouter.js'
+import chatRouter from './routes/chatRouter.js'
 
 const app = express()
 const PORT = 8080
