@@ -3,12 +3,14 @@ import { userModel } from "../models/user.js";
 
 const sessionRouter = Router()
 
-sessionRouter.get('/login', async (req, res) => {
+sessionRouter.post('/login', async (req, res) => {
     const { email, password } = req.body
-
+    console.log("muestro email y pass: ", email, password)
     try {
         const user = await userModel.findOne({ email: email }).lean()
+        //console.log(user)
         if (user && password == user.password) {
+            console.log("muestro req.session.email: ", req.session)            
             req.session.email = email
             if (user.rol == "Admin") {
                 req.session.admin = true
@@ -20,7 +22,8 @@ sessionRouter.get('/login', async (req, res) => {
             res.status(401).send("Usuario o contraseña no validos")
         }
     } catch (e) {
-        res.status(500).send("Error al loguear usuario", e)
+        console.log(e)
+        // res.status(500).send("Error al loguear usuario", e)
     }
 })
 

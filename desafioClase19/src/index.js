@@ -8,30 +8,31 @@ import MongoStore from "connect-mongo"
 const app = express()
 const PORT = 8080
 
-//MW
-app.use(express.json())
-app.use('/', indexRouter)
-app.use(cookieParser())
-app.use(session({
-    secret:"coderSecret",
-    resave: true,
-    store: MongoStore.create({
-        mongoUrl:"mongodb+srv://lucianoachille:zKOF3EYRUfCM1zWi@cluster0.1abfjeq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-        //mongoOptions:{userNewUrlParser:true, useUnifiedTopology:true},
-        ttl: 100
-    }),
-    saveUninitialized: true
-}))
+//server
+app.listen(PORT, ()=>{
+    console.log(`Server escuchando en ${PORT}`)
+})
 
 //conexion DB
 mongoose.connect("mongodb+srv://lucianoachille:zKOF3EYRUfCM1zWi@cluster0.1abfjeq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => console.log("DB connected"))
     .catch(e => console.log(e))
 
-//server
-    app.listen(PORT, ()=>{
-    console.log(`Server escuchando en ${PORT}`)
-})
+//MW
+app.use(express.json())
+app.use('/', indexRouter)
+app.use(cookieParser('secret'))
+app.use(session({
+    secret:"coderSecret",
+    resave: true,   //cada vex recargo guarda
+    store: MongoStore.create({
+        mongoUrl:"mongodb+srv://lucianoachille:zKOF3EYRUfCM1zWi@cluster0.1abfjeq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        //mongoOptions:{userNewUrlParser:true, useUnifiedTopology:true}, //deprecado
+        ttl: 60*60
+    }),
+    saveUninitialized: true
+}))
+
 
 //Routes Cookies
 app.get('/setCookie', (req, res) => {
@@ -59,12 +60,19 @@ app.get('/session',(req,res)=>{
     }
 })
 
-app.get('/login',(req,res)=>{
-    const {email,password} = req.body
+app.post('/login',(req,res)=>{
+    console.log('muestro req.body: ',req.body)
+    const email= req.body.email
+    const password = req.body.password
+
+    console.log('email y pass: ', email,password)
     if (email == "admin@admin.com" && password == "1234") {
+        console.log('muestro req.sessiom: ', req.session)
         req.session.email = email
         req.session.password = password
+        return res.send("Login Valido")
     }
-    console.log(req.session)
-    res.send("Login")
+    console.log('muestro req.session: ',req.session)
+    res.send("Login Invalido")
 })
+
