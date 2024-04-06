@@ -11,9 +11,9 @@ const indexRouter = express.Router()
 
 //ROUTES
 
-// indexRouter.use('/',(req,res)=>{
-//     res.status(200).send("Pagina de Inicio")
-// })
+indexRouter.get('/',(req,res)=>{
+    res.status(200).send("Pagina de Inicio")
+})
 indexRouter.use('/public', express.static(__dirname + '/public'))
 indexRouter.use('/api/products', productRouter, express.static(__dirname + '/public'))
 indexRouter.use('/api/cart', cartRouter)

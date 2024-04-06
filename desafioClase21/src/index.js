@@ -4,6 +4,8 @@ import mongoose from "mongoose"
 import cookieParser from "cookie-parser"
 import session from 'express-session'
 import MongoStore from "connect-mongo"
+import passport from "passport"
+import initializePassport from "./config/passport/passport.js"
 
 const app = express()
 const PORT = 8080
@@ -20,8 +22,6 @@ mongoose.connect("mongodb+srv://lucianoachille:zKOF3EYRUfCM1zWi@cluster0.1abfjeq
 
 //MW
 app.use(express.json())
-app.use('/', indexRouter)
-app.use(cookieParser('secret'))
 app.use(session({
     secret:"coderSecret",
     resave: true,   //cada vex recargo guarda
@@ -32,7 +32,14 @@ app.use(session({
     }),
     saveUninitialized: true
 }))
+app.use(cookieParser('secret'))
 
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
+
+//Routes
+app.use('/', indexRouter)
 
 //Routes Cookies
 app.get('/setCookie', (req, res) => {

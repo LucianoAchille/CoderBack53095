@@ -31,12 +31,12 @@ sessionRouter.get('/login', async (req, res) => {
 
 sessionRouter.post('/register', async (req, res) => {
     try {
-        const { first_name, last_name, email, password, age } = req.body
+        const { first_name, last_name, email, password, age, rol } = req.body
         const findUser = await userModel.findOne({ email: email })
         if (findUser) {
             res.status(400).send("Ya existe un usuario con este mail")
         } else {
-            await userModel.create({ first_name: first_name, last_name: last_name, email: email, age: age, password: createHash(password) })
+            await userModel.create({ first_name: first_name, last_name: last_name, email: email, age: age, password: createHash(password), rol:rol })
             res.status(200).send("Usuario creado correctamente")
         }
 
