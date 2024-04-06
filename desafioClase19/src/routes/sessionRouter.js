@@ -3,7 +3,7 @@ import { userModel } from "../models/user.js";
 
 const sessionRouter = Router()
 
-sessionRouter.post('/login', async (req, res) => {
+sessionRouter.get('/login', async (req, res) => {
     const { email, password } = req.body
     console.log("muestro email y pass: ", email, password)
     try {
@@ -50,6 +50,7 @@ sessionRouter.get('/logout', (req, res) => {
         if (e) {
             console.log(e)
         } else {
+            console.log('entre a logout')
             res.status(200).redirect("/")
         }
 

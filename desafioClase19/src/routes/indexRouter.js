@@ -11,7 +11,7 @@ const indexRouter = express.Router()
 
 //ROUTES
 
-indexRouter.use('/',(req,res)=>{
+indexRouter.get('/',(req,res)=>{
     res.status(200).send("Pagina de Inicio")
 })
 indexRouter.use('/public', express.static(__dirname + '/public'))

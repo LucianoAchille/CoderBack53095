@@ -20,8 +20,6 @@ mongoose.connect("mongodb+srv://lucianoachille:zKOF3EYRUfCM1zWi@cluster0.1abfjeq
 
 //MW
 app.use(express.json())
-app.use('/', indexRouter)
-app.use(cookieParser('secret'))
 app.use(session({
     secret:"coderSecret",
     resave: true,   //cada vex recargo guarda
@@ -32,7 +30,8 @@ app.use(session({
     }),
     saveUninitialized: true
 }))
-
+app.use(cookieParser('secret'))
+app.use('/', indexRouter)
 
 //Routes Cookies
 app.get('/setCookie', (req, res) => {
